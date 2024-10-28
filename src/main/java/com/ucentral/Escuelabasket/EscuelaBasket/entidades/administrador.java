@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity(name = "Administrador")
 @Table(name = "Adminis_bk")
-public class administrador implements Serializable {
+public class administrador implements Serializable,usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ADMINS")
     @SequenceGenerator(name = "SEQ_ADMINS", sequenceName = "SEQ_ADMINS", allocationSize = 1)
@@ -28,5 +28,21 @@ public class administrador implements Serializable {
     private String usuario;
 
     @Column(name = "ADMIN_CONTRASEÑA", nullable = false)
-    private String contraseña;
+    private String contrasena;
+
+    @Override
+    public String getUsuario() {
+        return this.usuario;
+    }
+
+    @Override
+    public String getContrasena() {
+        return this.contrasena;
+    }
+
+    @Override
+    public String getRol() {
+        return "Administrador";
+    }
+
 }

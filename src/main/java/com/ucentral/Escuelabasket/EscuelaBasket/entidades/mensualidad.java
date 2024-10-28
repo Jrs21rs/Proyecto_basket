@@ -34,6 +34,6 @@ public class mensualidad implements Serializable {
 
     // Relación muchos a uno con Alumno
     @ManyToOne
-    @JoinColumn(name = "ALM_Documento", nullable = false)
-    private alumno Alumno;
+    @JoinColumn(name = "alumno_id", nullable = false)
+    private alumno alumno;
 }

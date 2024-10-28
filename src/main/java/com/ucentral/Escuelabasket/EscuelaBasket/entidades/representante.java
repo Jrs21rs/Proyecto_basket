@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity(name = "Representante")
 @Table(name = "Repre_bk")
-public class representante implements Serializable {
+public class representante implements Serializable,usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_REPRE")
     @SequenceGenerator(name = "SEQ_REPRE", sequenceName = "SEQ_REPRE", allocationSize = 1)
@@ -28,5 +28,20 @@ public class representante implements Serializable {
     private String usuario;
 
     @Column(name = "REPRE_CONTRASEÑA", nullable = false)
-    private String contraseña;
+    private String contrasena;
+
+    @Override
+    public String getUsuario() {
+        return this.usuario;
+    }
+
+    @Override
+    public String getContrasena() {
+        return this.contrasena;
+    }
+
+    @Override
+    public String getRol() {
+        return "Representante";
+    }
 }

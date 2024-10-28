@@ -12,7 +12,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity(name = "Entrenador")
 @Table(name = "Entren_bk")
-public class entrenador implements Serializable {
+public class entrenador implements Serializable,usuario {
 
     @Id
     @Column(name = "ENTR_CEDULA", nullable = false)
@@ -29,4 +29,19 @@ public class entrenador implements Serializable {
 
     @Column(name = "ENTR_CONTRASENA", nullable = false)
     private String contrasena;
+
+    @Override
+    public String getUsuario() {
+        return this.usuario;
+    }
+
+    @Override
+    public String getContrasena() {
+        return this.contrasena;
+    }
+
+    @Override
+    public String getRol() {
+        return "Entrenador";
+    }
 }
