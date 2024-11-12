@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Título de la Página</title>
+
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body th:action="@{/Menuentrenador}" method="post" class="border p-4 bg-light">
+<nav>
+    <ul>
+        <li>
+            <a href="#"  class="logo">
+                <img th:src="@{/logo.png}" alt="" >
+                <span class="nav-item">code</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-home"></i>
+                <span class="nav-item">Menu Principal</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-list"></i>
+                <span class="nav-item">Lista Alumnos</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-clipboard"></i>
+                <span class="nav-item">Registro alumnos</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-clipboard-list"></i>
+                <span class="nav-item">Registro representantes</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="nav-item">Calendario</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Cerrar sesión</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+</body>
+</html>
