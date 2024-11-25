@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">Título de la Página</title>
+
+    <link rel="stylesheet" th:href="@{/estilos.css}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body class="border p-4 bg-light">
+<!-- Mensaje de confirmación -->
+<div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+<div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+<nav>
+    <ul>
+        <li>
+            <a href="#"  class="logo">
+                <img th:src="@{/logo.png}" alt="" >
+                <span class="nav-item">Entrenador</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-home"></i>
+                <span class="nav-item">Menu Principal</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="mostrarSeccion('form-register')">
+                <i class="fas fa-clipboard"></i>
+                <span class="nav-item">Registro alumnos</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="mostrarSeccion('List')">
+                <i class="fas fa-list"></i>
+                <span class="nav-item">Lista Alumnos</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="mostrarSeccion('form-registerR')">
+                <i class="fas fa-clipboard-list"></i>
+                <span class="nav-item">Registro representantes</span>
+            </a>
+        </li>
+        <li>
+            <a href="#" onclick="mostrarSeccion('List')">
+                <i class="fas fa-list"></i>
+                <span class="nav-item">Lista Representantes</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="fas fa-calendar-alt"></i>
+                <span class="nav-item">Calendario</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/logout}" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-item">Cerrar sesión</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- Listado de entrenadores -->
+<section id="List" class="List" style="display: none;">
+    <h2>Listado de Alumnos</h2>
+    <div class="content-container">
+        <table class="styled-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Altura</th>
+                <th>Peso</th>
+                <th>Posición de Juego</th>
+                <th>Historial Médico</th>
+                <th>Acciones</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Iteración sobre los alumnos -->
+            <tr th:each="alumno : ${alumnos}">
+                <td th:text="${alumno.alumnoID}"></td>
+                <td th:text="${alumno.nombre}"></td>
+                <td th:text="${#dates.format(alumno.fecha_nac, 'yyyy-MM-dd')}"></td>
+                <td th:text="${alumno.altura}"></td>
+                <td th:text="${alumno.peso}"></td>
+                <td th:text="${alumno.posición_juego}"></td>
+                <td th:text="${alumno.historial_med}"></td>
+                <td>
+                    <a href="#" th:onclick="'mostrarFormularioEditar(' + \'' + ${alumno.alumnoID} + '\' + ')'"
+                       th:href="@{/editar/{alumnoID}(alumnoID=${alumno.alumnoID})}">Editar</a>
+                    <a th:href="@{/eliminar/{alumnoID}(alumnoID=${alumno.alumnoID})}"
+                       onclick="return confirm('¿Estás seguro de que deseas eliminar este alumno?')">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- Formulario de registro -->
+<section id="form-register" class="form-register" style="display: none;">
+    <h4>Formulario de Registro de Alumno</h4>
+    <form th:action="@{/registrarAlumno}" method="post">
+        <input class="controls" type="number" name="AlumnoID" placeholder="Ingrese el Documento del Alumno" required>
+        <input class="controls" type="text" name="nombre" placeholder="Ingrese el nombre del Alumno" required>
+        <input class="controls" type="date" name="Fecha_nac" placeholder="Ingrese la fecha de nacimiento" required>
+        <input class="controls" type="number" name="altura" placeholder="Ingrese la altura del Alumno (en cm)" required>
+        <input class="controls" type="text" name="Historial_med" placeholder="Ingrese el historial médico del Alumno" required>
+        <input class="controls" type="number" name="peso" placeholder="Ingrese el peso del Alumno (en kg)"  required>
+        <input class="controls" type="text" name="posición_juego" placeholder="Ingrese la posición de juego del Alumno" required>
+        <input class="botons" type="submit" value="Registrar Alumno">
+    </form>
+</section>
+<section id="form-registerR" class="form-registerR" style="display: none;">
+<form th:action="@{/representantes/registrar}" method="post">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+
+    <label for="contacto">Contacto:</label>
+    <input type="text" id="contacto" name="contacto" required>
+
+    <label for="usuario">Usuario:</label>
+    <input type="text" id="usuario" name="usuario" required>
+
+    <label for="contrasena">Contraseña:</label>
+    <input type="password" id="contrasena" name="contrasena" required>
+
+    <button type="submit">Registrar</button>
+</form>
+</section>
+<section id="ListR" class="ListR" style="display: none;" >
+    <h2>Listado de Entrenadores</h2>
+    <div class="content-container">
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Usuario</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="representante : ${representantes}">
+            <td th:text="${representante.serial}"></td>
+            <td th:text="${representante.nombre}"></td>
+            <td th:text="${representante.contacto}"></td>
+            <td th:text="${representante.usuario}"></td>
+            <td>
+                <a th:href="@{/representantes/editar/{id}(id=${representante.serial})}">Editar</a>
+                <a th:href="@{/representantes/eliminar/{id}(id=${representante.serial})}"
+                   onclick="return confirm('¿Estás seguro de eliminar este representante?')">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    </div>
+</section>
+</body>
+<script>
+    function ocultarMensajes() {
+        setTimeout(function() {
+            var mensaje = document.getElementById("mensaje");
+            var error = document.getElementById("error");
+            if (mensaje) mensaje.style.display = "none";
+            if (error) error.style.display = "none";
+        }, 5000); // Los mensajes desaparecerán después de 5 segundos
+    }
+
+    // Llamar a la función para ocultar los mensajes si existen
+    window.onload = function() {
+        ocultarMensajes();
+    };
+    // Mostrar secciones dinámicamente
+    function mostrarSeccion(id) {
+        var secciones = ['List', 'form-register','form-registerR'];
+        secciones.forEach(function(seccion) {
+            var element = document.getElementById(seccion);
+            element.style.display = (seccion === id) ? "block" : "none";
+        });
+    }
+</script>
+</html>

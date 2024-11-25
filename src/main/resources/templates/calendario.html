@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Eventos</title>
+    <link rel="stylesheet" href="estilos.css"> <!-- Asegúrate de tener tu CSS aquí -->
+</head>
+<body>
+<div class="content-container">
+    <h1 class="calendar-header">Calendario de Eventos</h1>
+    <button onclick="location.href='/Menuadmin'" class="btn-back">Regresar</button>
+
+    <!-- Tabla de calendario -->
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miércoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+            <th>Sábado</th>
+            <th>Domingo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="evento : ${eventos}">
+            <!-- Aquí asumimos que cada evento tiene atributos como día de la semana -->
+            <td th:if="${evento.diaSemana} == 'Lunes'" th:text="${evento.nombre}">Evento</td>
+            <td th:if="${evento.diaSemana} == 'Martes'" th:text="${evento.nombre}">Evento</td>
+            <td th:if="${evento.diaSemana} == 'Miércoles'" th:text="${evento.nombre}">Evento</td>
+            <td th:if="${evento.diaSemana} == 'Jueves'" th:text="${evento.nombre}">Evento</td>
+            <td th:if="${evento.diaSemana} == 'Viernes'" th:text="${evento.nombre}">Evento</td>
+            <td th:if="${evento.diaSemana} == 'Sábado'" th:text="${evento.nombre}">Evento</td>
+            <td th:if="${evento.diaSemana} == 'Domingo'" th:text="${evento.nombre}">Evento</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Formulario para agregar un evento -->
+
+
+    <!-- Botón para eliminar evento -->
+    <div th:each="evento : ${eventos}">
+        <form th:action="@{/eventos/eliminar/{id}(id=${evento.id})}" method="get">
+            <button type="submit" class="btn-delete">Eliminar</button>
+        </form>
+    </div>
+</div>
+<script>
+    // Ocultar mensajes automáticamente después de 5 segundos
+    function ocultarMensajes() {
+        setTimeout(function() {
+            var mensaje = document.getElementById("mensaje");
+            var error = document.getElementById("error");
+            if (mensaje) mensaje.style.display = "none";
+            if (error) error.style.display = "none";
+        }, 5000);
+    }
+</script>
+</body>
+</html>
